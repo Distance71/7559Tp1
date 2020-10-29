@@ -1,0 +1,3 @@
+/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles/rebuild_cache.dir
+/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles/observatory.dir
+/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles/edit_cache.dir

@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/observatory.dir/src/models/Observatory.cpp.o"
   "CMakeFiles/observatory.dir/src/models/ObservatorySimulator.cpp.o"
   "CMakeFiles/observatory.dir/src/models/Photo.cpp.o"
+  "CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.o"
+  "CMakeFiles/observatory.dir/src/utils/Logger.cpp.o"
   "observatory"
   "observatory.pdb"
 )

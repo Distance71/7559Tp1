@@ -10,6 +10,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/Observatory.cpp" "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles/observatory.dir/src/models/Observatory.cpp.o"
   "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/ObservatorySimulator.cpp" "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles/observatory.dir/src/models/ObservatorySimulator.cpp.o"
   "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/Photo.cpp" "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles/observatory.dir/src/models/Photo.cpp.o"
+  "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/IPC/signals/SignalHandler.cpp" "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.o"
+  "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/Logger.cpp" "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles/observatory.dir/src/utils/Logger.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

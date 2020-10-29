@@ -6,32 +6,20 @@
 
 #IncludeRegexTransform: 
 
-/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/Camera.cpp
-Camera.h
-/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/Camera.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/Logger.cpp
+Logger.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/Logger.h
 
-/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/Camera.h
-cstdlib
--
+/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/Logger.h
 iostream
 -
-vector
+fstream
 -
-types.h
-/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/types.h
-Image.h
-/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/Image.h
-
-/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/Image.h
-iostream
+ctime
 -
-vector
+sys/stat.h
 -
-types.h
-/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/types.h
-
-/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/types.h
-stdlib.h
+map
 -
 string
 -

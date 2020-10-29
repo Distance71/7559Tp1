@@ -141,9 +141,35 @@ CMakeFiles/observatory.dir/src/models/ObservatorySimulator.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/observatory.dir/src/models/ObservatorySimulator.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/models/ObservatorySimulator.cpp" -o CMakeFiles/observatory.dir/src/models/ObservatorySimulator.cpp.s
 
+CMakeFiles/observatory.dir/src/utils/Logger.cpp.o: CMakeFiles/observatory.dir/flags.make
+CMakeFiles/observatory.dir/src/utils/Logger.cpp.o: ../src/utils/Logger.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/observatory.dir/src/utils/Logger.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/observatory.dir/src/utils/Logger.cpp.o -c "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/Logger.cpp"
+
+CMakeFiles/observatory.dir/src/utils/Logger.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/observatory.dir/src/utils/Logger.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/Logger.cpp" > CMakeFiles/observatory.dir/src/utils/Logger.cpp.i
+
+CMakeFiles/observatory.dir/src/utils/Logger.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/observatory.dir/src/utils/Logger.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/Logger.cpp" -o CMakeFiles/observatory.dir/src/utils/Logger.cpp.s
+
+CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.o: CMakeFiles/observatory.dir/flags.make
+CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.o: ../src/utils/IPC/signals/SignalHandler.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.o -c "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/IPC/signals/SignalHandler.cpp"
+
+CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/IPC/signals/SignalHandler.cpp" > CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.i
+
+CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/utils/IPC/signals/SignalHandler.cpp" -o CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.s
+
 CMakeFiles/observatory.dir/src/main.cpp.o: CMakeFiles/observatory.dir/flags.make
 CMakeFiles/observatory.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/observatory.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/observatory.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/observatory.dir/src/main.cpp.o -c "/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/src/main.cpp"
 
 CMakeFiles/observatory.dir/src/main.cpp.i: cmake_force
@@ -161,6 +187,8 @@ observatory_OBJECTS = \
 "CMakeFiles/observatory.dir/src/models/Observatory.cpp.o" \
 "CMakeFiles/observatory.dir/src/models/Photo.cpp.o" \
 "CMakeFiles/observatory.dir/src/models/ObservatorySimulator.cpp.o" \
+"CMakeFiles/observatory.dir/src/utils/Logger.cpp.o" \
+"CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.o" \
 "CMakeFiles/observatory.dir/src/main.cpp.o"
 
 # External object files for target observatory
@@ -171,10 +199,12 @@ observatory: CMakeFiles/observatory.dir/src/models/Image.cpp.o
 observatory: CMakeFiles/observatory.dir/src/models/Observatory.cpp.o
 observatory: CMakeFiles/observatory.dir/src/models/Photo.cpp.o
 observatory: CMakeFiles/observatory.dir/src/models/ObservatorySimulator.cpp.o
+observatory: CMakeFiles/observatory.dir/src/utils/Logger.cpp.o
+observatory: CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.o
 observatory: CMakeFiles/observatory.dir/src/main.cpp.o
 observatory: CMakeFiles/observatory.dir/build.make
 observatory: CMakeFiles/observatory.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable observatory"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/agus/Escritorio/Proyectos/Este Cuatri/75.59 Tecnicas concurrente/Tps/Tp1/7559Tp1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable observatory"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/observatory.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

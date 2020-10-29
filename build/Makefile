@@ -304,6 +304,60 @@ src/models/Photo.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/observatory.dir/build.make CMakeFiles/observatory.dir/src/models/Photo.cpp.s
 .PHONY : src/models/Photo.cpp.s
 
+src/utils/IPC/signals/SignalHandler.o: src/utils/IPC/signals/SignalHandler.cpp.o
+
+.PHONY : src/utils/IPC/signals/SignalHandler.o
+
+# target to build an object file
+src/utils/IPC/signals/SignalHandler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/observatory.dir/build.make CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.o
+.PHONY : src/utils/IPC/signals/SignalHandler.cpp.o
+
+src/utils/IPC/signals/SignalHandler.i: src/utils/IPC/signals/SignalHandler.cpp.i
+
+.PHONY : src/utils/IPC/signals/SignalHandler.i
+
+# target to preprocess a source file
+src/utils/IPC/signals/SignalHandler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/observatory.dir/build.make CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.i
+.PHONY : src/utils/IPC/signals/SignalHandler.cpp.i
+
+src/utils/IPC/signals/SignalHandler.s: src/utils/IPC/signals/SignalHandler.cpp.s
+
+.PHONY : src/utils/IPC/signals/SignalHandler.s
+
+# target to generate assembly for a file
+src/utils/IPC/signals/SignalHandler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/observatory.dir/build.make CMakeFiles/observatory.dir/src/utils/IPC/signals/SignalHandler.cpp.s
+.PHONY : src/utils/IPC/signals/SignalHandler.cpp.s
+
+src/utils/Logger.o: src/utils/Logger.cpp.o
+
+.PHONY : src/utils/Logger.o
+
+# target to build an object file
+src/utils/Logger.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/observatory.dir/build.make CMakeFiles/observatory.dir/src/utils/Logger.cpp.o
+.PHONY : src/utils/Logger.cpp.o
+
+src/utils/Logger.i: src/utils/Logger.cpp.i
+
+.PHONY : src/utils/Logger.i
+
+# target to preprocess a source file
+src/utils/Logger.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/observatory.dir/build.make CMakeFiles/observatory.dir/src/utils/Logger.cpp.i
+.PHONY : src/utils/Logger.cpp.i
+
+src/utils/Logger.s: src/utils/Logger.cpp.s
+
+.PHONY : src/utils/Logger.s
+
+# target to generate assembly for a file
+src/utils/Logger.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/observatory.dir/build.make CMakeFiles/observatory.dir/src/utils/Logger.cpp.s
+.PHONY : src/utils/Logger.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -331,6 +385,12 @@ help:
 	@echo "... src/models/Photo.o"
 	@echo "... src/models/Photo.i"
 	@echo "... src/models/Photo.s"
+	@echo "... src/utils/IPC/signals/SignalHandler.o"
+	@echo "... src/utils/IPC/signals/SignalHandler.i"
+	@echo "... src/utils/IPC/signals/SignalHandler.s"
+	@echo "... src/utils/Logger.o"
+	@echo "... src/utils/Logger.i"
+	@echo "... src/utils/Logger.s"
 .PHONY : help
 
 

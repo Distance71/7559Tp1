@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "models/types.h"
+#include "utils/Logger.h"
 #include "models/ObservatorySimulator.h"
 
 //TODO: Move to fileManager
@@ -12,6 +13,7 @@ status_t readConfigFile(size_t &quantityCameras, size_t &pixelsWidthOrHeightPerP
 int main(int argc, char *argv[]) {
     size_t quantityCameras, pixelsWidthOrHeightPerPhoto;
     status_t status = readConfigFile(quantityCameras, pixelsWidthOrHeightPerPhoto);
+    Logger *logger;
 
     if(status.code != OK) {
         std::cout << status.errorMsg << std::endl;
@@ -22,6 +24,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Se ingresaron " << quantityCameras << " Cameras y " << pixelsWidthOrHeightPerPhoto << " Pixels" << std::endl;
     std::cout << "Simulando..." << std::endl;
 
+    logger->getInstance()->log("El programa ha iniciado");
     resolution_t camerasResolution;
 
     camerasResolution.height = pixelsWidthOrHeightPerPhoto;

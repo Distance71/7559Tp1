@@ -5,6 +5,9 @@ ObservatorySimulator::ObservatorySimulator(size_t quantityCameras, resolution_t 
 }
 
 void ObservatorySimulator::takePhoto() {
+    Logger* logger;
+
+    logger->getInstance()->log("Se va a simular el observatorio");
     Photo* photo = this->observatory->takePhoto();
 
     photo->printImages(); //Erase

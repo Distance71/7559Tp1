@@ -23,4 +23,12 @@ add_executable(observatory
         src/models/ObservatorySimulator.cpp
         src/models/ObservatorySimulator.h
 
+        src/utils/Logger.cpp
+        src/utils/Logger.h
+        src/utils/IPC/SharedMemory.h
+        src/utils/IPC/signals/EventHandler.h
+        src/utils/IPC/signals/SIGINT_Handler.h
+        src/utils/IPC/signals/SignalHandler.cpp
+        src/utils/IPC/signals/SignalHandler.h
+
         src/main.cpp)

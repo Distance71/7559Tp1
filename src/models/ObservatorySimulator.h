@@ -3,6 +3,7 @@
 
 #include "Observatory.h"
 #include "types.h"
+#include "../utils/Logger.h"
 
 class ObservatorySimulator {
 	private:

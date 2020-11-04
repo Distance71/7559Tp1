@@ -17,14 +17,14 @@ add_executable(observatory
         src/models/Image.h
         src/models/Observatory.cpp
         src/models/Observatory.h
-        src/models/Photo.cpp
-        src/models/Photo.h
         src/models/types.h
         src/models/ObservatorySimulator.cpp
         src/models/ObservatorySimulator.h
 
         src/utils/Logger.cpp
         src/utils/Logger.h
+        src/utils/ErrorHandler.cpp
+        src/utils/ErrorHandler.h
         src/utils/IPC/SharedMemory.h
         src/utils/IPC/signals/EventHandler.h
         src/utils/IPC/signals/SIGINT_Handler.h

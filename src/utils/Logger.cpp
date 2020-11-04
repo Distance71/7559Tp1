@@ -25,12 +25,6 @@ Logger* Logger::getInstance()
   return instance;
 }
 
-void Logger::setTypeInstance(const string& type_)
-{
-  if (instance == nullptr)
-    instance = new Logger(type_);
-}
-
 string Logger::getFullTime(){
 	time_t timestamp;
 	time(&timestamp);

@@ -1,23 +1,21 @@
 #ifndef OBSERVATORY_H
 #define OBSERVATORY_H
 
+#include <unistd.h>
+#include <wait.h>
 #include "Camera.h"
-#include "Photo.h"
 #include "Image.h"
 
 class Observatory {
 	private:
     	std::vector<Camera*> cameras;
-		Photo* lastPhoto;
-	
-    	std::vector<Image*> takeImages();
-    	void adjustImages();
-    	void combineImages();
 
 	public:
     	Observatory(size_t quantityCameras, resolution_t resolution);
 
-    	Photo* takePhoto();
+		std::vector<Image*> takeImages();
+    	size_t* adjustImages(size_t* &images);
+		void combineImages(size_t *images);
 };
 
 #endif

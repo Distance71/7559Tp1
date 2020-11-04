@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string>
 
-typedef unsigned int pixel_t;
+typedef size_t pixel_t;
 
 typedef enum statusCode {
     OK = 0,

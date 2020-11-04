@@ -6,19 +6,18 @@
 #include "models/types.h"
 #include "utils/Logger.h"
 #include "models/ObservatorySimulator.h"
+#include "utils/ErrorHandler.h"
 
 //TODO: Move to fileManager
-status_t readConfigFile(size_t &quantityCameras, size_t &pixelsWidthOrHeightPerPhoto);
+int readConfigFile(size_t &quantityCameras, size_t &pixelsWidthOrHeightPerPhoto);
 
 int main(int argc, char *argv[]) {
     size_t quantityCameras, pixelsWidthOrHeightPerPhoto;
-    status_t status = readConfigFile(quantityCameras, pixelsWidthOrHeightPerPhoto);
+    int resultCode = readConfigFile(quantityCameras, pixelsWidthOrHeightPerPhoto);
     Logger *logger;
 
-    if(status.code != OK) {
-        std::cout << status.errorMsg << std::endl;
+    if(resultCode < 0)
         return EXIT_FAILURE;
-    }
 
     std::cout << "El programa ha iniciado" << std::endl;
     std::cout << "Se ingresaron " << quantityCameras << " Cameras y " << pixelsWidthOrHeightPerPhoto << " Pixels" << std::endl;
@@ -36,24 +35,13 @@ int main(int argc, char *argv[]) {
     return EXIT_SUCCESS;
 }
 
-
-// TODO: Move this
-status_t handleError(statusCode_t statusCode, std::string errorMsg){
-    std::cerr << errorMsg << std::endl;
-
-    status_t auxStatus;
-
-    auxStatus.errorMsg = errorMsg;
-    auxStatus.code = statusCode;
-
-    return auxStatus;
-}
-
-status_t readConfigFile(size_t &quantityCameras, size_t &pixelsWidthOrHeightPerPhoto) {
+// TODO: Move to utils
+int readConfigFile(size_t &quantityCameras, size_t &pixelsWidthOrHeightPerPhoto) {
     std::ifstream configFile(CONFIG_PATH);
+    ErrorHandler *errorHandler;
     
     if (configFile.is_open()) {
-        std::cout << "Se pudo abrir" << std::endl;
+        std::cout << "Se pudo abrir el archivo de configuracion" << std::endl;
         std::string line;
         try {
             std::getline(configFile, line);
@@ -62,17 +50,15 @@ status_t readConfigFile(size_t &quantityCameras, size_t &pixelsWidthOrHeightPerP
             std::getline(configFile, line);
             pixelsWidthOrHeightPerPhoto = std::stoi(line);
 
-            status_t status;
-
-            status.code = OK;
-
-            return status;
+            return 0;
         } catch (std::exception const &ex) {
             configFile.close();
-            return handleError(GENERIC_ERROR, "Error al leer el archivo de configuracion ");
+            errorHandler->getInstance()->throwError(GENERIC_ERROR, "Error al leer el archivo de configuracion ");
+            return -1;
         }
         configFile.close();
     } else {
-        return handleError(GENERIC_ERROR, "No se encontro archivo de configuracion!");
+        errorHandler->getInstance()->throwError(GENERIC_ERROR, "No se encontro archivo de configuracion!");
+        return -1;
     }
 }

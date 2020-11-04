@@ -5,6 +5,7 @@ Camera::Camera(resolution_t resolution) {
 }
 
 std::vector<pixel_t> Camera::generateImagePixels() {
+	srand((unsigned int) time(NULL));
 	size_t resolutionLength = this->resolution.width * this->resolution.height;
 	std::vector<pixel_t> pixels;
 
@@ -17,7 +18,5 @@ std::vector<pixel_t> Camera::generateImagePixels() {
 Image* Camera::shot() {
 	std::vector<pixel_t> pixels = generateImagePixels();
 	
-	Image* image = new Image(pixels, this->resolution);
-
-	return image;
+	return new Image(pixels);
 }

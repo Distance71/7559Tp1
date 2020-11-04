@@ -8,6 +8,7 @@
 #include <string.h>
 #include <iostream>
 #include <errno.h>
+#include "ErrorHandler.h"
 
 template <class T> class SharedMemory {
 	private:
@@ -19,8 +20,8 @@ template <class T> class SharedMemory {
 	public:
 		SharedMemory();
 		~SharedMemory();
-		void create(const std::string &fileName, const char letter);
-		void free();
+		int create(const std::string &fileName, const char letter);
+		int free();
 
 		void write(const T &data);
 		T read() const;
@@ -32,42 +33,49 @@ template <class T> SharedMemory <T>::~SharedMemory() {
 	this->free();
 }
 
-template <class T> void SharedMemory <T>::create (const std::string &fileName, const char letter ) {
+template <class T> int SharedMemory <T>::create(const std::string &fileName, const char letter ) {
+	ErrorHandler* errorHandler;
 	key_t key = ftok(fileName.c_str(), letter);
 	if(key == -1) {
-		std::string mensaje = std::string ( " Error en ftok () : " ) + std::string (strerror ( errno ));
-		throw mensaje;
+		errorHandler->getInstance()->throwError(GENERIC_ERROR, "SharedMemory Error en ftok(): " + std::string(strerror(errno)));
+		return -1;
 	}
 	
 	this->shmId = shmget(key, sizeof(T), 0644 | IPC_CREAT);
 	if (this->shmId == -1) {
-		std::string mensaje = std::string(" Error en shmget () : ") + std::string(strerror(errno));
-		throw mensaje;
+		errorHandler->getInstance()->throwError(GENERIC_ERROR, "SharedMemory: Error en shmget(): " + std::string(strerror(errno)));
+		return -1;
 	}
 
 	void* tmpPtr = shmat(this->shmId, NULL, 0);
 	
-	if ( tmpPtr == ( void *) -1 ) {
-		std::string mensaje = std::string ( " Error en shmat () : " ) + std::string (strerror ( errno ));
-		throw mensaje;
+	if (tmpPtr == (void *) -1) {
+		errorHandler->getInstance()->throwError(GENERIC_ERROR, "SharedMemory: Error en shmat(): " + std::string(strerror(errno)));
+		return -1;
 	}
 
-	this->ptrDatos = static_cast<T*> (tmpPtr);
+	this->ptrData = static_cast<T*> (tmpPtr);
+	return 0;
 }
 
-template <class T> void SharedMemory <T>::free() {
-	int errorDt = shmdt (( void *) this->ptrDatos);
+template <class T> int SharedMemory <T>::free() {
+	ErrorHandler* errorHandler;
+	int errorDt = shmdt((void *) this->ptrData);
 	
 	if(errorDt == -1) {
-		std :: string mensaje = std :: string ( " Error en shmdt () : " ) + std :: string ( strerror (
-		errno ) ) ;
-		throw mensaje ;
+		errorHandler->getInstance()->throwError(GENERIC_ERROR, "SharedMemory: Error en shmdt(): " + std::string(strerror(errno)));
+		return -1;
 	}
 
 	int attachedProcesses = this->attachedProcesses();
 
-	if(procAdosados == 0) {
-		shmctl(this->shmId, IPC_RMID, NULL);
+	if(attachedProcesses == 0) {
+		int resultCode = shmctl(this->shmId, IPC_RMID, NULL);
+
+		if(resultCode == -1) {
+			errorHandler->getInstance()->throwError(GENERIC_ERROR, "SharedMemory: Error en shmctl(): " + std::string(strerror(errno)));
+			return -1;
+		}
 	}
 }
 

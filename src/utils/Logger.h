@@ -1,5 +1,5 @@
-#ifndef _LOGGER_H_
-#define _LOGGER_H_
+#ifndef LOGGER_H_
+#define LOGGER_H_
 
 #include <iostream>
 #include <fstream>
@@ -22,7 +22,6 @@ class Logger {
 
     public:   
         static Logger* getInstance();
-        static void setTypeInstance(const string& type_);
         void log(const string& message);
         virtual ~Logger();
 };

@@ -15,6 +15,7 @@ class Logger {
     private:
         static Logger* instance;
         ofstream* logFile;
+        static bool debugMode;
 
         Logger(const string& type_);
         string getTime();
@@ -24,6 +25,7 @@ class Logger {
         static Logger* getInstance();
         void log(const string& message);
         virtual ~Logger();
+        void setDebug();
 };
 
 #endif

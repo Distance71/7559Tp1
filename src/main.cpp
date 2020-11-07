@@ -8,13 +8,35 @@
 #include "models/ObservatorySimulator.h"
 #include "utils/ErrorHandler.h"
 
+#define ARGV_SIMULATION_MODE 1
+#define ARGV_APP_MODE 2
+
 //TODO: Move to fileManager
 int readConfigFile(size_t &quantityCameras, size_t &pixelsWidthOrHeightPerPhoto);
 
 int main(int argc, char *argv[]) {
+    if(!argv || !argv[ARGV_SIMULATION_MODE]) {
+        cout << "No se han ingresado los parametros necesarios" << endl;
+        return EXIT_FAILURE;
+    }
+
+    string appSimulatorMode;
+
+    if(strlen(argv[ARGV_SIMULATION_MODE]) == 0) {
+        cout << "No ha ingresado un modo para simular" << endl;
+        return EXIT_FAILURE;
+    }
+
+    appSimulatorMode = argv[ARGV_SIMULATION_MODE];
+    Logger *logger;
+
+    if(argv[ARGV_APP_MODE] && !strcmp(argv[ARGV_APP_MODE], "DEBUG")) {
+        cout << "Se va a iniciar debug" << endl;
+        logger->setDebug();
+    }
+    
     size_t quantityCameras, pixelsWidthOrHeightPerPhoto;
     int resultCode = readConfigFile(quantityCameras, pixelsWidthOrHeightPerPhoto);
-    Logger *logger;
 
     if(resultCode < 0)
         return EXIT_FAILURE;
@@ -30,7 +52,15 @@ int main(int argc, char *argv[]) {
     camerasResolution.width = pixelsWidthOrHeightPerPhoto;
     ObservatorySimulator* simulator = new ObservatorySimulator(quantityCameras, camerasResolution);
 
-    simulator->run();
+    if (appSimulatorMode == "SHARED_MEMORY") {
+        cout << "se va a simular shared" << endl;
+        simulator->runSharedMem();
+    }
+    
+    if(appSimulatorMode == "FIFOS") {
+        cout << "se va a simular fifos" << endl;
+        simulator->runFifos();
+    }
 
     return EXIT_SUCCESS;
 }

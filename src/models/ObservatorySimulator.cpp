@@ -66,7 +66,7 @@ int ObservatorySimulator::takePhoto() {
     }
 }
 
-int ObservatorySimulator::processImages() {
+int ObservatorySimulator::processImagesSharedMem() {
     ErrorHandler *errorHandler;
 
     SharedMemory<size_t*> sharedPhoto;
@@ -130,8 +130,90 @@ int ObservatorySimulator::processImages() {
     }
 }
 
-void ObservatorySimulator::run() {
-    this->takePhoto();
+int ObservatorySimulator::processImagesFifos() {
+    ErrorHandler *errorHandler;
+
+    SharedMemory<size_t*> sharedPhoto;
+    int resultCode = sharedPhoto.create("/bin/bash", 'A');
+
+    if (resultCode < 0) {
+        errorHandler->getInstance()->throwError(GENERIC_ERROR, "Simulator: adjust: son: error en memoria compartida: ");
+        return -1;
+    }
+
+    pid_t procId = fork();
+
+    if (procId == 0) {
+        
+        size_t* adjustedImages = this->observatory->adjustImages(this->lastPhotoImagesSerialized);
+        size_t iteratorValDebug = 0;
+
+        iteratorValDebug += sizeof(size_t);
+
+        size_t debug[31];
+        for(size_t i = 0; i < 31; i++) {
+            memcpy(&debug[i], adjustedImages + i * sizeof(size_t), sizeof(size_t));
+            cout << "el dato adjusted" << i << " valor " << debug[i] << endl;
+        }
+
+        //Debug
+
+        sharedPhoto.write(adjustedImages);
+        sleep(1);
+        
+        std::cout << std::endl;
+        //sharedPhoto.free();
+        std::cout << " Hijo : fin del proceso " << std::endl;
+
+    } else {
+        // SharedMemory<size_t*> sharedPhoto;
+        // int resultCode = sharedPhoto.create("/bin/bash", 'A');
+
+        // if (resultCode < 0) {
+        //     errorHandler->getInstance()->throwError(GENERIC_ERROR, "Simulator: adjust: father: error en memoria compartida: ");
+        //     return -1;
+        // }
+
+        //sharedPhoto.write(this->lastPhotoImagesSerialized);
+        //sleep(2);
+
+        wait(NULL);
+
+        size_t* images = sharedPhoto.read();
+
+        size_t debug[31];
+        for(size_t i = 0; i < 31; i++) {
+            memcpy(&debug[i], images + i * sizeof(size_t), sizeof(size_t));
+            cout << "el dato final" << i << " valor " << debug[i] << endl;
+        }
+
+        this->observatory->combineImages(images);
+        
+        sharedPhoto.free();
+        cout << " Padre : fin del proceso " << endl ;
+    }
+}
+
+void ObservatorySimulator::runSharedMem() {
+    SIGINT_Handler sigint_handler;
+    SignalHandler::getInstance()->registerHandler(SIGINT, &sigint_handler);
     
-    this->processImages();
+    while (sigint_handler.getGracefulQuit() == 0) {
+        this->takePhoto();
+        this->processImagesSharedMem();
+    }
+
+    SignalHandler::destroy();
+}
+
+void ObservatorySimulator::runFifos() {
+    SIGINT_Handler sigint_handler;
+    SignalHandler::getInstance()->registerHandler(SIGINT, &sigint_handler);
+    
+    while (sigint_handler.getGracefulQuit() == 0) {
+        this->takePhoto();
+        this->processImagesFifos();
+    }
+
+    SignalHandler::destroy();
 }

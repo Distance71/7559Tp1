@@ -1,6 +1,7 @@
 #include "Logger.h"
 
 Logger* Logger::instance = nullptr;
+bool Logger::debugMode = false;
 
 Logger::Logger(const string& type_){
 	mkdir(LOG_FOLDER, 0777);
@@ -36,9 +37,15 @@ string Logger::getTime(){
 	return (getFullTime()).substr(4,15);
 }
 
-void Logger::log(const string& message){
-    *(this->logFile) << getTime() << " - " << message << " \n";
-    this->logFile->flush();
+void Logger::log(const string& message) {
+	if(debugMode) {
+		*(this->logFile) << getTime() << " - " << message << " \n";
+    	this->logFile->flush();
+	}
+}
+
+void Logger::setDebug() {
+	debugMode = true;
 }
 
 Logger::~Logger(){

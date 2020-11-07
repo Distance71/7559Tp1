@@ -24,7 +24,7 @@ template <class T> class SharedMemory {
 		int free();
 
 		void write(const T &data);
-		T read() const;
+		T read();
 };
 
 template <class T> SharedMemory <T>::SharedMemory() : shmId (0), ptrData (NULL) {}
@@ -86,9 +86,11 @@ template <class T> int SharedMemory <T>::attachedProcesses() {
 }
 
 template < class T > void SharedMemory <T>:: write(const T &data) {
+	cout << "se va a llamar a write" << endl;
 	*(this->ptrData) = data;
 }
-template < class T > T SharedMemory <T>:: read() const {
+template < class T > T SharedMemory <T>:: read() {
+	cout << "se va a llamar a read" << endl;
 	return *(this->ptrData);
 }
 

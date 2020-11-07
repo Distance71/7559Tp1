@@ -71,6 +71,9 @@ Image* Image::deserialize(size_t* bytes, size_t quantityPixels) {
 
 void Image::process(){
 	size_t quantityPixels = this->pixels.size();
-	for(size_t i = 0; i < quantityPixels; i++)
-		this->pixels[i] ++;
+	for(size_t i = 0; i < quantityPixels; i++) {
+		//std::cout << "el pixel antes: " << this->pixels[i] << std::endl; 
+		this->pixels[i]++;
+		//std::cout << "el pixel despues: " << this->pixels[i] << std::endl;
+	}
 }

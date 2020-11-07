@@ -30,5 +30,11 @@ add_executable(observatory
         src/utils/IPC/signals/SIGINT_Handler.h
         src/utils/IPC/signals/SignalHandler.cpp
         src/utils/IPC/signals/SignalHandler.h
+        src/utils/IPC/fifos/Fifo.cpp
+        src/utils/IPC/fifos/Fifo.h
+        src/utils/IPC/fifos/FifoRead.cpp
+        src/utils/IPC/fifos/FifoRead.h
+        src/utils/IPC/fifos/FifoWrite.cpp
+        src/utils/IPC/fifos/FifoWrite.h
 
         src/main.cpp)

@@ -53,13 +53,18 @@ int main(int argc, char *argv[]) {
     ObservatorySimulator* simulator = new ObservatorySimulator(quantityCameras, camerasResolution);
 
     if (appSimulatorMode == "SHARED_MEMORY") {
-        cout << "se va a simular shared" << endl;
+        cout << "Se va a simular shared" << endl;
         simulator->runSharedMem();
     }
     
     if(appSimulatorMode == "FIFOS") {
-        cout << "se va a simular fifos" << endl;
+        cout << "Se va a simular fifos" << endl;
         simulator->runFifos();
+    }
+
+    else {
+        cout << "No ha ingresado un modo de simulacion valido" << endl;
+        return EXIT_FAILURE;
     }
 
     return EXIT_SUCCESS;

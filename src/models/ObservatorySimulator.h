@@ -11,13 +11,17 @@
 #include "../utils/ErrorHandler.h"
 #include "../utils/IPC/signals/SIGINT_Handler.h"
 #include "../utils/IPC/signals/SignalHandler.h"
+#include "../utils/IPC/fifos/FifoRead.h"
+#include "../utils/IPC/fifos/FifoWrite.h"
 
 #define INIT_SIZE 1000
+#define FILE_FIFO "/tmp/archivo_fifo"
 
 class ObservatorySimulator {
 	private:
         Observatory* observatory;
 		size_t* lastPhotoImagesSerialized;
+		size_t lastPhotoImagesSerializedSize;
 		size_t quantityCameras;
 
 		int takePhoto();

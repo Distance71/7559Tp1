@@ -5,6 +5,8 @@
 #include <vector>
 #include <string.h>
 #include "types.h"
+#include "../utils/ErrorHandler.h"
+#include "../utils/Logger.h"
 
 class Image {
 	private:
@@ -16,7 +18,6 @@ class Image {
     	std::vector<pixel_t> getPixels();
     	void adjust();
 		void print();
-		static Image* deserialize(size_t* bytes, size_t quantityPixels);
 		size_t* serialize();
 		void process();
 };

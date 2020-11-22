@@ -8,10 +8,14 @@ Fifo::~Fifo() {
 }
 
 void Fifo::closeFifo() {
+	Logger* logger;
 	close(fd);
 	fd = -1;
+	logger->getInstance()->log("El fifo se ha cerrado");
 }
 
 void Fifo::free() const {
+	Logger* logger;
 	unlink ( name.c_str() );
+	logger->getInstance()->log("El fifo se ha liberado");
 }

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <errno.h>
 #include "ErrorHandler.h"
+#include "Logger.h"
 
 template <class T> class SharedMemory {
 	private:
@@ -34,6 +35,7 @@ template <class T> SharedMemory <T>::~SharedMemory() {
 }
 
 template <class T> int SharedMemory <T>::create(const std::string &fileName, const char letter ) {
+	Logger* logger;
 	ErrorHandler* errorHandler;
 	key_t key = ftok(fileName.c_str(), letter);
 	if(key == -1) {
@@ -55,11 +57,13 @@ template <class T> int SharedMemory <T>::create(const std::string &fileName, con
 	}
 
 	this->ptrData = static_cast<T*> (tmpPtr);
+	logger->getInstance()->log("La memoria se ha podido crear con exito");
 	return 0;
 }
 
 template <class T> int SharedMemory <T>::free() {
 	ErrorHandler* errorHandler;
+	Logger* logger;
 	int errorDt = shmdt((void *) this->ptrData);
 	
 	if(errorDt == -1) {
@@ -77,6 +81,7 @@ template <class T> int SharedMemory <T>::free() {
 			return -1;
 		}
 	}
+	logger->getInstance()->log("La memoria se ha podido liberar con exito");
 }
 
 template <class T> int SharedMemory <T>::attachedProcesses() {
@@ -86,13 +91,17 @@ template <class T> int SharedMemory <T>::attachedProcesses() {
 }
 
 template < class T > void SharedMemory <T>:: write(const T &data) {
+	Logger* logger;
+
 	cout << "se va a llamar a write" << endl;
 	*(this->ptrData) = data;
+	logger->getInstance()->log("La memoria se ha podido escribir con exito");
 }
 template < class T > T SharedMemory <T>:: read() {
 	cout << "se va a llamar a read" << endl;
+	Logger* logger;
+	logger->getInstance()->log("La memoria se va a leer");
 	return *(this->ptrData);
 }
-
 
 #endif

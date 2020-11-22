@@ -11,7 +11,6 @@
 #define ARGV_SIMULATION_MODE 1
 #define ARGV_APP_MODE 2
 
-//TODO: Move to fileManager
 int readConfigFile(size_t &quantityCameras, size_t &pixelsWidthOrHeightPerPhoto);
 
 int main(int argc, char *argv[]) {
@@ -54,15 +53,18 @@ int main(int argc, char *argv[]) {
 
     if (appSimulatorMode == "SHARED_MEMORY") {
         cout << "Se va a simular shared" << endl;
+        logger->getInstance()->log("El programa se ejecutara en modo shared memory");
         simulator->runSharedMem();
     }
     
     if(appSimulatorMode == "FIFOS") {
         cout << "Se va a simular fifos" << endl;
+        logger->getInstance()->log("El programa se ejecutara en modo fifos");
         simulator->runFifos();
     }
 
     else {
+        logger->getInstance()->log("No ha ingresado un modo de simulacion valido. El programa terminara");
         cout << "No ha ingresado un modo de simulacion valido" << endl;
         return EXIT_FAILURE;
     }
@@ -70,7 +72,6 @@ int main(int argc, char *argv[]) {
     return EXIT_SUCCESS;
 }
 
-// TODO: Move to utils
 int readConfigFile(size_t &quantityCameras, size_t &pixelsWidthOrHeightPerPhoto) {
     std::ifstream configFile(CONFIG_PATH);
     ErrorHandler *errorHandler;

@@ -2,6 +2,7 @@
 #define FIFO_WRITE_H_
 
 #include "Fifo.h"
+#include "../../Logger.h"
 
 class FifoWrite : public Fifo {
 public:

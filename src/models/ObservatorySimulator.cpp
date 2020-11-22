@@ -8,7 +8,6 @@ int ObservatorySimulator::takePhoto() {
     Logger* logger;
     ErrorHandler *errorHandler;
 
-    logger->getInstance()->log("Se va a simular el observatorio");
     std::vector<Image*> images = this->observatory->takeImages();
 
     size_t quantityImages = images.size();
@@ -29,8 +28,10 @@ int ObservatorySimulator::takePhoto() {
 
         if((bytesUsed + sizeof(size_t)) >= bytesAvailable) {
             this->lastPhotoImagesSerialized = (size_t*) realloc(this->lastPhotoImagesSerialized, bytesAvailable * 2);
-            if(!this->lastPhotoImagesSerialized) //TODO: add log
+            if(!this->lastPhotoImagesSerialized) {
+                errorHandler->getInstance()->throwError(GENERIC_ERROR, "Simulator: takePhoto: error en memoria: ");
                 return -1;
+            }
 
             bytesAvailable *= 2;
         }
@@ -46,8 +47,10 @@ int ObservatorySimulator::takePhoto() {
         for(size_t i = 0; i < auxQuantityPixels; i++) {
             if((bytesUsed + sizeof(size_t)) >= bytesAvailable) {
                 this->lastPhotoImagesSerialized = (size_t*) realloc(this->lastPhotoImagesSerialized, bytesAvailable * 2);
-                if(!this->lastPhotoImagesSerialized) //TODO: add log
+                if(!this->lastPhotoImagesSerialized) {
+                    errorHandler->getInstance()->throwError(GENERIC_ERROR, "Simulator: takePhoto: error en memoria: ");
                     return -1;
+                }
 
                 bytesAvailable *= 2;
             }
@@ -57,19 +60,13 @@ int ObservatorySimulator::takePhoto() {
         }
     }
 
-    size_t debug[31];
-    for(size_t i = 0; i < 31; i++) {
-        memcpy(&debug[i], this->lastPhotoImagesSerialized + i * sizeof(size_t), sizeof(size_t));
-        cout << "el dato inicial" << i << " valor " << debug[i] << endl;
-    }
-
     this->lastPhotoImagesSerializedSize = bytesUsed;
+    logger->getInstance()->log("Se han tomado las imagenes con exito");
 }
 
 int ObservatorySimulator::processImagesSharedMem() {
     ErrorHandler *errorHandler;
-
-    
+    Logger* logger;
 
     pid_t procId = fork();
 
@@ -83,21 +80,13 @@ int ObservatorySimulator::processImagesSharedMem() {
         }
         
         size_t* adjustedImages = this->observatory->adjustImages(this->lastPhotoImagesSerialized);
-        size_t iteratorValDebug = 0;
-
-        iteratorValDebug += sizeof(size_t);
-
-        // size_t debug[31];
-        // for(size_t i = 0; i < 31; i++) {
-        //     memcpy(&debug[i], adjustedImages + i * sizeof(size_t), sizeof(size_t));
-        //     cout << "el dato adjusted" << i << " valor " << debug[i] << endl;
-        // }
 
         sharedPhoto.write(adjustedImages);
         sleep(1);
         
         std::cout << std::endl;
         sharedPhoto.free();
+        logger->getInstance()->log("Se ha terminado el proceso hijo de procesamiento");
         std::cout << " Hijo : fin del proceso " << std::endl;
 
     } else {
@@ -113,22 +102,17 @@ int ObservatorySimulator::processImagesSharedMem() {
 
         size_t* images = sharedPhoto.read();
 
-        // size_t debug[31];
-        // for(size_t i = 0; i < 31; i++) {
-        //     memcpy(&debug[i], images + i * sizeof(size_t), sizeof(size_t));
-        //     cout << "el dato final" << i << " valor " << debug[i] << endl;
-        // }
-
         this->observatory->combineImages(images);
         
         sharedPhoto.free();
+        logger->getInstance()->log("Se ha terminado el proceso padre de procesamiento");
         cout << " Padre : fin del proceso " << endl ;
     }
 }
 
 int ObservatorySimulator::processImagesFifos() {
     ErrorHandler *errorHandler;
-
+    Logger* logger;
     pid_t procId = fork();
 
     if (procId == 0) {
@@ -136,15 +120,6 @@ int ObservatorySimulator::processImagesFifos() {
         channel.openFifo();
         
         size_t* adjustedImages = this->observatory->adjustImages(this->lastPhotoImagesSerialized);
-        size_t iteratorValDebug = 0;
-
-        iteratorValDebug += sizeof(size_t);
-
-        size_t debug[31];
-        for(size_t i = 0; i < 31; i++) {
-            memcpy(&debug[i], adjustedImages + i * sizeof(size_t), sizeof(size_t));
-            cout << "el dato adjusted" << i << " valor " << debug[i] << endl;
-        }
 
         channel.writeFifo(adjustedImages, this->lastPhotoImagesSerializedSize) ;
         sleep(1);
@@ -152,6 +127,7 @@ int ObservatorySimulator::processImagesFifos() {
         channel.free();
         
         std::cout << " Hijo : fin del proceso " << std::endl;
+        logger->getInstance()->log("Se ha terminado el proceso hijo de procesamiento");
 
     } else {
         FifoRead channel(FILE_FIFO);
@@ -161,25 +137,23 @@ int ObservatorySimulator::processImagesFifos() {
 
         ssize_t bytesLeidos = channel.readFifo(static_cast < void * >(this->lastPhotoImagesSerialized), this->lastPhotoImagesSerializedSize);
 
-        size_t debug[31];
-        for(size_t i = 0; i < 31; i++) {
-            memcpy(&debug[i], this->lastPhotoImagesSerialized + i * sizeof(size_t), sizeof(size_t));
-            cout << "el dato final" << i << " valor " << debug[i] << endl;
-        }
-
         this->observatory->combineImages(this->lastPhotoImagesSerialized);
         channel.free();
 
-        cout << " Padre : fin del proceso " << endl ;
+        cout << " Padre : fin del proceso " << endl;
+        logger->getInstance()->log("Se ha terminado el proceso padre de procesamiento");
     }
 }
 
 void ObservatorySimulator::runSharedMem() {
+    Logger *logger;
     SIGINT_Handler sigint_handler;
     SignalHandler::getInstance()->registerHandler(SIGINT, &sigint_handler);
     
     while (sigint_handler.getGracefulQuit() == 0) {
+        logger->getInstance()->log("El simulador pasara a tomar las fotos");
         this->takePhoto();
+        logger->getInstance()->log("El programa procesara las images");
         this->processImagesSharedMem();
     }
 
@@ -187,11 +161,14 @@ void ObservatorySimulator::runSharedMem() {
 }
 
 void ObservatorySimulator::runFifos() {
+    Logger *logger;
     SIGINT_Handler sigint_handler;
     SignalHandler::getInstance()->registerHandler(SIGINT, &sigint_handler);
     
     while (sigint_handler.getGracefulQuit() == 0) {
+        logger->getInstance()->log("El simulador pasara a tomar las fotos");
         this->takePhoto();
+        logger->getInstance()->log("El programa procesara las images");
         this->processImagesFifos();
     }
 

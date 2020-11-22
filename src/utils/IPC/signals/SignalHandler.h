@@ -6,6 +6,7 @@
 #include <memory.h>
 
 #include "EventHandler.h"
+#include "../../Logger.h"
 
 class SignalHandler {
 

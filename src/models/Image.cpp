@@ -22,12 +22,18 @@ void Image::print(){
 }
 
 size_t* Image::serialize() {
+	Logger* logger;
+	ErrorHandler *errorHandler;
 	size_t quantityPixels = this->pixels.size();
+
+	logger->getInstance()->log("Se va a serializar una imagen");
 
 	size_t* bufferAux = (size_t *) malloc(sizeof(size_t) + sizeof(pixel_t) * quantityPixels);
 
-	if(!bufferAux) //TODO: Add log
+	if(!bufferAux) {
+		errorHandler->getInstance()->throwError(GENERIC_ERROR, "Image: serialize: error en memoria: ");
 		return NULL;
+	}
 
 	size_t* bufferIter = bufferAux;
 
@@ -39,41 +45,18 @@ size_t* Image::serialize() {
 		bufferIter += sizeof(size_t);
 	}
 
-	// To debug
-
-	// size_t debugIter = 0, debugPixel;
-	// memcpy(&quantityPixels, bufferAux, sizeof(size_t));
-	// std::cout << "la cant pixels decod mem " << quantityPixels << std::endl;
-	// debugIter += sizeof(size_t);
-
-	// for(size_t i = 0; i < quantityPixels; i++) {
-	// 	memcpy(&debugPixel, bufferAux + debugIter, sizeof(size_t));
-	// 	std::cout << "el pixel decod mem " << debugPixel << std::endl;
-	// 	debugIter += sizeof(size_t);
-	// }
+	logger->getInstance()->log("Se serializo una imagen con exito");
 
 	return bufferAux;
 }
 
-Image* Image::deserialize(size_t* bytes, size_t quantityPixels) {
-    char pixel[sizeof(pixel_t) + 1];
-
-	std::vector<pixel_t> pixels;
-	pixel_t auxPixel;
-
-	for(size_t i = 0; i < quantityPixels; i++) {
-		memcpy(&auxPixel, bytes + i * sizeof(size_t), sizeof(size_t));
-		pixels.push_back(auxPixel);
-	}
-
-	return new Image(pixels);
-}
-
-void Image::process(){
+void Image::process() {
+	Logger* logger;
 	size_t quantityPixels = this->pixels.size();
-	for(size_t i = 0; i < quantityPixels; i++) {
-		//std::cout << "el pixel antes: " << this->pixels[i] << std::endl; 
+
+	logger->getInstance()->log("La imagen se procesara");
+	for(size_t i = 0; i < quantityPixels; i++)
 		this->pixels[i]++;
-		//std::cout << "el pixel despues: " << this->pixels[i] << std::endl;
-	}
+	
+	logger->getInstance()->log("La imagen se ha podido procesar");
 }

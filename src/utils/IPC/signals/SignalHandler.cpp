@@ -15,14 +15,16 @@ SignalHandler *SignalHandler::getInstance() {
 }
 
 void SignalHandler::destroy() {
+    Logger* logger;
     if (instance != NULL) {
         delete (instance);
         instance = NULL;
     }
+    logger->getInstance()->log("Se destruyo una señal");
 }
 
 EventHandler *SignalHandler::registerHandler(int signum, EventHandler *eh) {
-
+    Logger* logger;
     EventHandler *old_eh = SignalHandler::signal_handlers[signum];
     SignalHandler::signal_handlers[signum] = eh;
 
@@ -32,6 +34,8 @@ EventHandler *SignalHandler::registerHandler(int signum, EventHandler *eh) {
     sigemptyset(&sa.sa_mask);
     sigaddset(&sa.sa_mask, signum);
     sigaction(signum, &sa, 0);
+
+    logger->getInstance()->log("Se registro una señal");
 
     return old_eh;
 }

@@ -5,6 +5,7 @@
 #include <wait.h>
 #include "Camera.h"
 #include "Image.h"
+#include "../utils/Logger.h"
 
 class Observatory {
 	private:

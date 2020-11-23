@@ -118,10 +118,10 @@ int ObservatorySimulator::processImagesFifos() {
     if (procId == 0) {
         FifoWrite channel(FILE_FIFO);
         channel.openFifo();
-        
-        size_t* adjustedImages = this->observatory->adjustImages(this->lastPhotoImagesSerialized);
 
-        channel.writeFifo(adjustedImages, this->lastPhotoImagesSerializedSize) ;
+        size_t* adjustedImages = this->observatory->adjustImages(this->lastPhotoImagesSerialized);
+        channel.writeFifo(adjustedImages, this->lastPhotoImagesSerializedSize);
+
         sleep(1);
 
         channel.free();
@@ -147,30 +147,19 @@ int ObservatorySimulator::processImagesFifos() {
 
 void ObservatorySimulator::runSharedMem() {
     Logger *logger;
-    SIGINT_Handler sigint_handler;
-    SignalHandler::getInstance()->registerHandler(SIGINT, &sigint_handler);
     
-    while (sigint_handler.getGracefulQuit() == 0) {
-        logger->getInstance()->log("El simulador pasara a tomar las fotos");
-        this->takePhoto();
-        logger->getInstance()->log("El programa procesara las images");
-        this->processImagesSharedMem();
-    }
-
-    SignalHandler::destroy();
+    logger->getInstance()->log("El simulador pasara a tomar las fotos");
+    this->takePhoto();
+    logger->getInstance()->log("El programa procesara las images");
+    this->processImagesSharedMem();
 }
 
 void ObservatorySimulator::runFifos() {
     Logger *logger;
-    SIGINT_Handler sigint_handler;
-    SignalHandler::getInstance()->registerHandler(SIGINT, &sigint_handler);
-    
-    while (sigint_handler.getGracefulQuit() == 0) {
-        logger->getInstance()->log("El simulador pasara a tomar las fotos");
-        this->takePhoto();
-        logger->getInstance()->log("El programa procesara las images");
-        this->processImagesFifos();
-    }
 
-    SignalHandler::destroy();
+    logger->getInstance()->log("El simulador pasara a tomar las fotos");
+    this->takePhoto();
+    logger->getInstance()->log("El programa procesara las images");
+    this->processImagesFifos();
+
 }

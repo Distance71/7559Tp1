@@ -46,21 +46,27 @@ int main(int argc, char *argv[]) {
 
     logger->getInstance()->log("El programa ha iniciado");
     resolution_t camerasResolution;
+    SIGINT_Handler sigint_handler;
+    SignalHandler::getInstance()->registerHandler(SIGINT, &sigint_handler);
 
     camerasResolution.height = pixelsWidthOrHeightPerPhoto;
     camerasResolution.width = pixelsWidthOrHeightPerPhoto;
     ObservatorySimulator* simulator = new ObservatorySimulator(quantityCameras, camerasResolution);
 
     if (appSimulatorMode == "SHARED_MEMORY") {
-        cout << "Se va a simular shared" << endl;
-        logger->getInstance()->log("El programa se ejecutara en modo shared memory");
-        simulator->runSharedMem();
+        while (sigint_handler.getGracefulQuit() == 0) {
+            cout << "Se va a simular shared" << endl;
+            logger->getInstance()->log("El programa se ejecutara en modo shared memory");
+            simulator->runSharedMem();
+        }
     }
     
     if(appSimulatorMode == "FIFOS") {
-        cout << "Se va a simular fifos" << endl;
-        logger->getInstance()->log("El programa se ejecutara en modo fifos");
-        simulator->runFifos();
+        while (sigint_handler.getGracefulQuit() == 0) {
+            cout << "Se va a simular fifos" << endl;
+            logger->getInstance()->log("El programa se ejecutara en modo fifos");
+            simulator->runFifos();
+        }
     }
 
     else {
@@ -68,6 +74,8 @@ int main(int argc, char *argv[]) {
         cout << "No ha ingresado un modo de simulacion valido" << endl;
         return EXIT_FAILURE;
     }
+
+    SignalHandler::destroy();
 
     return EXIT_SUCCESS;
 }

@@ -11,7 +11,12 @@ std::vector<Image*> Observatory::takeImages() {
 
     for(auto camera : this->cameras)
         images.push_back(camera->shot());
-        
+    
+    for(size_t i = 0; i < images.size(); i++) {
+        cout << "Image " << i << endl;
+        images[i]->print();
+    }
+    
     logger->getInstance()->log("El observatorio ha tomado las imagenes");
     return images;
 }
@@ -80,10 +85,12 @@ void Observatory::combineImages(size_t *images) {
     for(size_t i = 0; i < quantityImages; i++) {
         memcpy(&quantityPixels, images + iter, sizeof(size_t));
         iter += sizeof(size_t);
+        cout << "Imagen " << i << endl;
 
         for(size_t j = 0; j < quantityPixels; j++) {
             memcpy(&pixel, images + iter, sizeof(size_t));
             iter += sizeof(size_t);
+            cout << " Pixel " << j << " " << " " << pixel << endl;
         }
     }
 

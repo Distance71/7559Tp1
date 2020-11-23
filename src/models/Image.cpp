@@ -15,8 +15,8 @@ void Image::adjust() {
 }
 
 void Image::print(){
-	for(pixel_t pixel : this->pixels)
-		std::cout << pixel;
+	for(size_t i = 0; i < this->pixels.size(); i++)
+		std::cout << "Pixel " << i << " " << this->pixels[i] << endl;;
 
 	std::cout << std::endl;
 }

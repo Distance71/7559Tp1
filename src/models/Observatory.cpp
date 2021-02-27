@@ -12,10 +12,14 @@ std::vector<Image*> Observatory::takeImages() {
     for(auto camera : this->cameras)
         images.push_back(camera->shot());
     
+    cout << "Take images " << endl;
     for(size_t i = 0; i < images.size(); i++) {
+
         cout << "Image " << i << endl;
         images[i]->print();
     }
+
+    cout << "Se tomaron las images " << endl;
     
     logger->getInstance()->log("El observatorio ha tomado las imagenes");
     return images;

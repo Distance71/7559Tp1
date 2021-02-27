@@ -14,17 +14,16 @@
 template <class T> class SharedMemory {
 	private:
 		int shmId;
-		T*	ptrData;
-
+		T	ptrData;
 		int attachedProcesses();
 
 	public:
 		SharedMemory();
 		~SharedMemory();
-		int create(const std::string &fileName, const char letter);
+		int create(const std::string &fileName, const char letter, size_t nBytes);
 		int free();
 
-		void write(const T &data);
+		void write(const T &data, size_t nBytes, size_t elementBytes );
 		T read();
 };
 
@@ -34,7 +33,7 @@ template <class T> SharedMemory <T>::~SharedMemory() {
 	this->free();
 }
 
-template <class T> int SharedMemory <T>::create(const std::string &fileName, const char letter ) {
+template <class T> int SharedMemory <T>::create(const std::string &fileName, const char letter, size_t nBytes ) {
 	Logger* logger;
 	ErrorHandler* errorHandler;
 	key_t key = ftok(fileName.c_str(), letter);
@@ -43,7 +42,7 @@ template <class T> int SharedMemory <T>::create(const std::string &fileName, con
 		return -1;
 	}
 	
-	this->shmId = shmget(key, sizeof(T), 0644 | IPC_CREAT);
+	this->shmId = shmget(key, nBytes, 0644 | IPC_CREAT);
 	if (this->shmId == -1) {
 		errorHandler->getInstance()->throwError(GENERIC_ERROR, "SharedMemory: Error en shmget(): " + std::string(strerror(errno)));
 		return -1;
@@ -56,7 +55,7 @@ template <class T> int SharedMemory <T>::create(const std::string &fileName, con
 		return -1;
 	}
 
-	this->ptrData = static_cast<T*> (tmpPtr);
+	this->ptrData = static_cast<T> (tmpPtr);
 	logger->getInstance()->log("La memoria se ha podido crear con exito");
 	return 0;
 }
@@ -90,18 +89,24 @@ template <class T> int SharedMemory <T>::attachedProcesses() {
 	return state.shm_nattch;
 }
 
-template < class T > void SharedMemory <T>:: write(const T &data) {
+template < class T > void SharedMemory <T>:: write(const T &data, size_t nBytes, size_t elementBytes ) {
 	Logger* logger;
 
-	cout << "se va a llamar a write" << endl;
-	*(this->ptrData) = data;
+	size_t bytesUsed = 0;
+
+	const size_t quantityElements = nBytes / elementBytes;
+
+	for(size_t j = 0; j < quantityElements; j++) {
+		*(this->ptrData + bytesUsed) = *(data + bytesUsed);
+		bytesUsed += elementBytes;
+	}
+
 	logger->getInstance()->log("La memoria se ha podido escribir con exito");
 }
 template < class T > T SharedMemory <T>:: read() {
-	cout << "se va a llamar a read" << endl;
 	Logger* logger;
 	logger->getInstance()->log("La memoria se va a leer");
-	return *(this->ptrData);
+	return this->ptrData;
 }
 
 #endif

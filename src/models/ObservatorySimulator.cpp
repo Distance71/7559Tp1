@@ -71,29 +71,29 @@ int ObservatorySimulator::processImagesSharedMem() {
     pid_t procId = fork();
 
     if (procId == 0) {
-        SharedMemory<size_t*> sharedPhoto;
-        int resultCode = sharedPhoto.create("/bin/bash", 'A');
+        sleep(5);
+        cout << "Hijo duerme 5 segundos" << endl;
+        
+        size_t* adjustedImages = this->observatory->adjustImages(this->lastPhotoImagesSerialized);
 
-        if (resultCode < 0) {
+        SharedMemory<size_t*> sharedPhoto;
+        int resultCode = sharedPhoto.create("/bin/bash", 'R', this->lastPhotoImagesSerializedSize);
+
+        if (resultCode != 0) {
             errorHandler->getInstance()->throwError(GENERIC_ERROR, "Simulator: adjust: son: error en memoria compartida: ");
             return -1;
         }
         
-        size_t* adjustedImages = this->observatory->adjustImages(this->lastPhotoImagesSerialized);
-
-        sharedPhoto.write(adjustedImages);
-        sleep(1);
-        
-        std::cout << std::endl;
+        sharedPhoto.write(adjustedImages, this->lastPhotoImagesSerializedSize, sizeof(size_t));
         sharedPhoto.free();
         logger->getInstance()->log("Se ha terminado el proceso hijo de procesamiento");
         std::cout << " Hijo : fin del proceso " << std::endl;
-
+        exit(0);
     } else {
         SharedMemory<size_t*> sharedPhoto;
-        int resultCode = sharedPhoto.create("/bin/bash", 'A');
+        int resultCode = sharedPhoto.create("/bin/bash", 'R', this->lastPhotoImagesSerializedSize);
 
-        if (resultCode < 0) {
+        if (resultCode != 0) {
             errorHandler->getInstance()->throwError(GENERIC_ERROR, "Simulator: adjust: father: error en memoria compartida: ");
             return -1;
         }
@@ -107,7 +107,9 @@ int ObservatorySimulator::processImagesSharedMem() {
         sharedPhoto.free();
         logger->getInstance()->log("Se ha terminado el proceso padre de procesamiento");
         cout << " Padre : fin del proceso " << endl ;
+        exit(0);
     }
+    return 0;
 }
 
 int ObservatorySimulator::processImagesFifos() {
